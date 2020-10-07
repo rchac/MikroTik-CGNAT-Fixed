@@ -1,0 +1,27 @@
+:global sqrt do={
+  :for i from=0 to=$1 do={
+    :if (i * i > $1) do={ :return ($i - 1) }
+  }
+}
+
+:global addNatRules do={
+  :global sqrt
+  /ip firewall nat add chain=srcnat action=jump jump-target=xxx \
+    src-address="$($srcStart)-$($srcStart + $count - 1)"
+
+  :local x [$sqrt $count]
+  :local y $x
+  :if ($x * $x = $count) do={ :set y ($x + 1) }
+  :for i from=0 to=($x + 1) do={
+    /ip firewall nat add chain=xxx action=jump jump-target="xxx-$($i)" \
+     src-address="$($srcStart + ($x * $i))-$($srcStart + ($x * ($i + 1) - 1))"
+  }
+
+  :for i from=0 to=($count - 1) do={
+    :local prange "$($portStart + ($i * $portsPerAddr))-$($portStart + (($i + 1) * $portsPerAddr) - 1)"
+    /ip firewall nat add chain="xxx-$($i / $x)" action=src-nat protocol=tcp src-address=($srcStart + $i) \
+     to-address=$toAddr to-ports=$prange
+    /ip firewall nat add chain="xxx-$($i / $x)" action=src-nat protocol=udp src-address=($srcStart + $i) \
+     to-address=$toAddr to-ports=$prange
+  }
+}

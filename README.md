@@ -1,7 +1,11 @@
 # tools
 
 MikroTik's wiki offers an almost-functional script to implement CG-NAT.
-The only changes needed to make it work are to add ":global sqrt" into the top of the second function, and to change 
+The only changes needed to make it work are to add 
+```
+:global sqrt
+```
+into the top of the second function, and to change 
 ```
 :for i from=0 to=$x do={
 ```

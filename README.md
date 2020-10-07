@@ -14,3 +14,5 @@ to
 :for i from=0 to=($x + 1) do={
 ```
 The script on the wiki does not create the xxx jump rule for the last /30 of addresses due to the counter mistake. With these two changes it works correctly.
+
+Inside this repository is a fixed version of MikroTik's CG-NAT script that should work with fixed jump rules.

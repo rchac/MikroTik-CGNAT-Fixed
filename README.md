@@ -1,5 +1,3 @@
-# tools
-
 MikroTik's wiki offers an almost-functional script to implement CG-NAT.
 The only changes needed to make it work are to add 
 ```
